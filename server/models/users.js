@@ -17,6 +17,12 @@ const userSchema = new mongoose.Schema({
   newpassword: {
     type: String,
     required: [true, "Please enter password"],
+    validate: {
+      validator: function(v) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/.test(v);
+      },
+      message: props => `${props.value} is not a valid password! Password must contain at least 8 characters including one letter and one number.`
+    },
     select: false,
   },
   conformpassword: {
@@ -34,6 +40,13 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
     unique: true,
+    validate: {
+      validator: function(v) {
+        return /^[0-9]{10}$/.test(v);
+      },
+      message: props => `${props.value} is not a valid password! Password must contain at least 8 characters including one letter and one number.`
+    },
+    
   },
   passwordChangedAt: Date,
   isadmin: {

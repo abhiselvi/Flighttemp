@@ -18,7 +18,7 @@ mongoose
 
 app.use("/api/auth", auth);
 app.use("/api/admin", admin);
-// app.use("/api/user", booking);
+app.use("/api/user", booking);
 
 app.listen(3000, (req, res) => {
   console.log("Connected succesfully");

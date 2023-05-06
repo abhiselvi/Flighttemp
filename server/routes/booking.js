@@ -2,9 +2,8 @@ const express = require("express");
 const router = express.Router();
 const {
   booking
-} = require("../controller/authenticationController");
+} = require("../controller/bookingcontroller");
 
-router.get("/",protect, getAllUsers);
-router.post("/register", register);
-router.post("/login", login);
+router.post("/",protect, getAllUsers);
+
 module.exports = router;

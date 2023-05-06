@@ -1,13 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllUsers,
-  register,
-  login,
-  protect,
-} = require("../controller");
+    addflightdetails ,
+} = require("../controller/flightController");
 
-router.get("/",protect, getAllUsers);
-router.post("/register", register);
-router.post("/login", login);
+router.post("/",addflightdetails );
 module.exports = router;

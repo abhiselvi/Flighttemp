@@ -14,13 +14,13 @@ const flightSchema = new mongoose.Schema({
   seats: {
     type: Number,
     required: [true, "Please enter total number of seats"],
-    validate: {
-        validator: function(v) {
-          return /^60\d{8}$/.test(v);
-        },
-      }
+    // validate: {
+    //     validator: function(v) {
+    //       return /^60\d{8}$/.test(v);
+    //     },
+    //   }
   },
-  form: {
+  from: {
     type: String,
     required: [true, "Please enter from address"],
   },
@@ -44,6 +44,6 @@ const flightSchema = new mongoose.Schema({
 
 
 
-const User = mongoose.model("flights", flightSchema);
+const flight = mongoose.model("flights", flightSchema);
 
 module.exports = flight;

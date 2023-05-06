@@ -5,6 +5,7 @@ const app = express()
 app.use(express.json())
 require('dotenv').config();
 app.use("/api/auth",routes)
+app.use("/api/admin",routes)
 mongoose.connect(process.env.link).then(()=>{
     console.log('succ')
 }).catch((err)=>{

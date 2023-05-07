@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema({
   contact: {
     type: Number,
     required: true,
-    unique: true,
     validate: {
       validator: function(v) {
         return /^[0-9]{10}$/.test(v);

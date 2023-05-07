@@ -1,6 +1,21 @@
 const users = require("../models/users");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
+
+exports.getUser = async (req, res) => {
+  try {
+    const user = await users.findById(req.params.id);
+    res.status(200).json({
+      status: "success",
+      data: {
+        user,
+      },
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
 exports.getAllUsers = async (req, res) => {
   try {
     const user = await users.find();
@@ -87,7 +102,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.protect = async (req, res, next) => {
+exports.protectuser = async (req, res, next) => {
   //  getting token
   let token;
   try {
@@ -110,6 +125,55 @@ exports.protect = async (req, res, next) => {
       return res.status(401).json({
         status: "failure",
         data: "user belonging to tgis token is not available",
+      });
+    }
+
+    // password changed recently
+    if (freshUser.passwordchangedrecently(decoded.iat)) {
+      return res.status(401).json({
+        status: "failure",
+        data: "you changed password recently you need to login again",
+      });
+    }
+  } catch (error) {
+    return res.status(401).json({
+      status: "failure",
+      data: "Token is invalid",
+    });
+  }
+  next();
+};
+
+exports.protectadmin = async (req, res, next) => {
+  //  getting token
+  let token;
+  try {
+    if (req.headers && req.headers.authorization) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+    if (!token) {
+      return res.status(401).json({
+        status: "failure",
+        data: "you not loged in please login to access feature",
+      });
+    }
+
+    // verify token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    // user exists
+    const freshUser = await users.findById(decoded.id);
+    if (!freshUser) {
+      return res.status(401).json({
+        status: "failure",
+        data: "Admin belonging to this token is not available",
+      });
+    }
+
+    if (!freshUser.isadmin) {
+      return res.status(401).json({
+        status: "failure",
+        data: "Your are not a admin",
       });
     }
 

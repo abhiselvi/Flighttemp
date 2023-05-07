@@ -11,7 +11,6 @@ exports.bookFlight = async (req, res) => {
         data: "seat not available",
       });
     }
-
     let passengers = [];
     req.body.passengers.forEach((passenger) => {
       let obj = {
@@ -23,13 +22,11 @@ exports.bookFlight = async (req, res) => {
       };
       passengers.push(obj);
     });
-
     const newBooking = await bookingModel.create({
       flightId: flight._id,
       userId: req.body.userId,
       passengers: passengers,
     });
-
     return res.status(200).json({
       status: "success",
       data: {
@@ -45,3 +42,43 @@ exports.bookFlight = async (req, res) => {
     });
   }
 };
+
+exports.getAllFlight=async(req,res)=>{
+  try{
+    const getAllFlight= await flightModel.find();
+    return res.status(400).json({
+      status: "success",
+      data: {
+        getAllFlight,
+      },
+    });
+  }
+  catch(err){
+    return res.status(400).json({
+      status: "failure",
+      data: {
+        error,
+      },
+    });
+  }
+}
+
+exports.getFlight=async(req,res)=>{
+  try{
+    const getAllFlight= await flightModel.findById(req.params.id);
+    return res.status(400).json({
+      status: "success",
+      data: {
+        getAllFlight,
+      },
+    });
+  }
+  catch(err){
+    return res.status(400).json({
+      status: "failure",
+      data: {
+        error,
+      },
+    });
+  }
+}

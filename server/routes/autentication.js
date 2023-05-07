@@ -4,10 +4,13 @@ const {
   getAllUsers,
   register,
   login,
-  protect,
+  protectuser,
+  protectadmin,
+  getUser,
 } = require("../controller/authenticationController");
 
-router.get("/",protect, getAllUsers);
+router.get("/",protectadmin, getAllUsers);
+router.get("/:id",protectuser, getUser)
 router.post("/register", register);
 router.post("/login", login);
 module.exports = router;

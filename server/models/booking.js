@@ -20,9 +20,15 @@ const passengerSchema = new Schema({
   },
   passportId: {
     type: String,
+    required: function() {
+      return !this.aadharId;
+    }
   },
   aadharId: {
     type: String,
+    required: function() {
+      return !this.passportId;
+    }
   },
 });
 

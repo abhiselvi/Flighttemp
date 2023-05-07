@@ -14,11 +14,6 @@ const flightSchema = new mongoose.Schema({
   seats: {
     type: Number,
     required: [true, "Please enter total number of seats"],
-    // validate: {
-    //     validator: function(v) {
-    //       return /^60\d{8}$/.test(v);
-    //     },
-    //   }
   },
   from: {
     type: String,

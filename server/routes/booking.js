@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { bookflight } = require("../controller/bookingcontroller");
+const { bookFlight } = require("../controller/bookingcontroller");
 
-router.post("/", bookflight);
+router.post("/", bookFlight);
 
 module.exports = router;

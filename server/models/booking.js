@@ -21,14 +21,22 @@ const passengerSchema = new Schema({
   passportId: {
     type: String,
   },
+  aadharId: {
+    type: String,
+  },
 });
 
-const flightSchema = new Schema({
+const bookingSchema = new Schema({
   flightId: {
+    type: String,
+    required: true,
+  },
+  userId: {
     type: String,
     required: true,
   },
   passengers: [passengerSchema],
 });
 
-const Flight = mongoose.model("Flight", flightSchema);
+const booking = mongoose.model("bookings", bookingSchema);
+module.exports = booking;
